@@ -16,4 +16,6 @@ const Categories = new Schema<Category, CategoryModel>({
   }
 })
 
+
+
 export default model('Category', Categories)
