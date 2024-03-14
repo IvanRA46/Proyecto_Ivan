@@ -43,9 +43,9 @@ router.get('/:id',passport.authenticate('jwt',{session : false}), async (req, re
   }
 })
 
-router.get('/findByName',passport.authenticate('jwt',{session : false}), async (req, res, next) => {
+router.get('/findByName/:name',passport.authenticate('jwt',{session : false}), async (req, res, next) => {
   try {
-    const motos = await service.findByName(req.query.name as string)
+    const motos = await service.findByName(req.params.name as string)
     res.status(200).json(motos)
   } catch (error) {
     next(error)
@@ -57,7 +57,7 @@ router.get(
 passport.authenticate('jwt',{session : false}), 
 async (req, res, next) =>{
   try{
-    const motos = await service.findByUser(req.query.user as string)
+    const motos = await service.findByUser(req.query.user as unknown as ObjectId)
     res.status(200).json(motos)
   } catch (error){
     next (error)

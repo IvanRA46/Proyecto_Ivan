@@ -30,7 +30,9 @@ class MotoCategoryService {
   }
 
   async findById(id: string) {
-    const category = await Categories.findById(id).catch((error) => {
+    const category = await Categories.findById(id)
+    .populate([{path: 'user', strictPopulate: false}])
+    .catch((error) => {
       console.log('Error while connecting to the DB', error)
     })
 
@@ -42,7 +44,9 @@ class MotoCategoryService {
   }
 
   async findByName(name: string) {
-    const category = await Categories.findOne({ name }).catch((error) => {
+    const category = await Categories.findOne({ name })
+    .populate([{path: 'user', strictPopulate: false}])
+    .catch((error) => {
       console.log('Error while connecting to the DB', error)
     })
 
@@ -53,7 +57,8 @@ class MotoCategoryService {
     return category
   }
 
-  async findByUser(user: string) {
+
+  async findByUser(user: ObjectId) {
     try {
     const category = await Categories.find({ user })
     console.log(user)
