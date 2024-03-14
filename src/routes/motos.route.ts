@@ -1,19 +1,11 @@
 import express from 'express'
 import { MotoCategory } from '../types/motos.type'
 import MotoCategoryService from '../services/motos.service'
-import passport from 'passport'
-import { UserRequestType } from '../types/user.type'
-import { JwtRequestType } from '../types/user.type'
-import { ObjectId } from 'mongoose'
 
 const router = express.Router()
 const service = new MotoCategoryService()
 
-router.post('/', passport.authenticate('jwt',{session : false}),
- async (req: JwtRequestType, res) => {
-  const { 
-    user: { sub }, 
-  } = req
+router.post('/', async (req, res) => {
   const Motocategory: MotoCategory = req.body
   const newMotoCategory = await service.create(
     Motocategory,
@@ -22,7 +14,7 @@ router.post('/', passport.authenticate('jwt',{session : false}),
   res.status(201).json(newMotoCategory)
 })
 
-router.get('/',passport.authenticate('jwt',{session : false}), async (req: JwtRequestType, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const{
       user
@@ -43,7 +35,7 @@ router.get('/:id',passport.authenticate('jwt',{session : false}), async (req, re
   }
 })
 
-router.get('/findByName',passport.authenticate('jwt',{session : false}), async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const motos = await service.findByName(req.query.name as string)
     res.status(200).json(motos)
