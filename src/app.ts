@@ -7,6 +7,7 @@ import {
 } from './middlewares/error.handler'
 import routerApi from './routes'
 import { config } from './config/config'
+import cors from 'cors'
 import passport from 'passport'
 import './utils/auth'
 
@@ -19,6 +20,7 @@ const connectDB = () => {
 }
 
 app.use(express.json())
+app.use(cors())
 routerApi(app)
 
 app.listen(port, () => {

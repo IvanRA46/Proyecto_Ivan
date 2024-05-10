@@ -22,6 +22,18 @@ router.post('/', passport.authenticate('jwt',{session : false}),
   res.status(201).json(newMotoCategory)
 })
 
+router.get('/findFirst', async (req: JwtRequestType, res, next) => {
+  try {
+    const{
+      user
+    } = req
+    const motos = await service.findFirst()
+    res.status(200).json(motos)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/',passport.authenticate('jwt',{session : false}), async (req: JwtRequestType, res, next) => {
   try {
     const{
@@ -33,6 +45,8 @@ router.get('/',passport.authenticate('jwt',{session : false}), async (req: JwtRe
     next(error)
   }
 })
+
+
 
 router.get('/:id',passport.authenticate('jwt',{session : false}), async (req, res, next) => {
   try {

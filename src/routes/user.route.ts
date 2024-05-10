@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.get('/', async (req, res, next) => {
+router.get('/email', async (req, res, next) => {
   try {
     const { email } = req.query
     const user = await service.findByEmail(email as string)

@@ -29,6 +29,20 @@ class MotoCategoryService {
     return categories
   }
 
+  async findFirst() {
+    const categories = await Categories.find()
+    
+    .catch((error) => {
+      console.log('Error while connecting to the DB', error)
+    })
+  
+    if (!categories) {
+      throw boom.notFound('There are not categories')
+    }
+  
+    return categories[0]
+  }
+
   async findById(id: string) {
     const category = await Categories.findById(id)
     .populate([{path: 'user', strictPopulate: false}])
@@ -72,5 +86,7 @@ class MotoCategoryService {
     }
   }
 }
+
+
 
 export default MotoCategoryService
